@@ -207,13 +207,17 @@ Player::Player( int index )
 	if (playerIndex == 0)
 	{
 		rs.setFillColor(Color::Red);
+		rs.setPosition(100, 100);
+
 	}
 	else
 	{
 		rs.setFillColor(Color::Green);
+		rs.setPosition(200, 100);
 	}
 
 	rs.setSize(Vector2f(40, 40));
+
 	rs.setOrigin(rs.getLocalBounds().width / 2, rs.getLocalBounds().height / 2);
 	
 }
@@ -222,7 +226,7 @@ void Player::Update()
 {
 	if (state.currInput > 0)
 	{
-		rs.move(Vector2f(.5, 0));
+		rs.move(Vector2f(0, .5));
 	}
 }
 
@@ -236,7 +240,9 @@ TestGame::TestGame()
 {
 	currInstance = this;
 
-	ggpoMode = false;
+	ggpoMode = true;
+
+	isSyncTest = false;
 
 	ggpo = NULL;
 
@@ -309,12 +315,14 @@ void TestGame::InitGGPO()
 	string ipStr;// = "127.0.0.1";
 
 	ifstream is;
-	is.open("Resources/ggpotest.txt");
+	is.open("ggpotest.txt");
 	is >> frameDelay;
 	is >> ipStr;
 
 	int sync;
 	is >> sync;
+
+	isSyncTest = sync > 0;
 
 
 	//int offset = 1, local_player = 0;
@@ -322,7 +330,7 @@ void TestGame::InitGGPO()
 	ngs.num_players = num_players;
 
 
-	if (sync)
+	if (isSyncTest)
 	{
 		result = ggpo_start_synctest(&ggpo, &cb, "steamworkstestsync", num_players,
 			sizeof(int), 1);
@@ -487,17 +495,27 @@ void TestGame::GGPORunFrame()
 	int disconnect_flags;
 	int compressedInputs[GGPO_MAX_PLAYERS] = { 0 };
 
+	int localIndex = 0;
+	if (!isSyncTest)
+	{
+		localIndex = ngs.local_player_handle - 1;
+	}
 
 	int inputs[4] = { 0 };
-	if (Keyboard::isKeyPressed(Keyboard::W))
+	if (Keyboard::isKeyPressed(Keyboard::W) && window->hasFocus())
 	{
-	inputs[0] += 1;
+		cout << "moving: " << ngs.local_player_handle << endl;
+		inputs[localIndex] += 1;
+	}
+	else
+	{
+		//cout << "local handle: " << ngs.local_player_handle << endl;
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::I))
+	/*if (Keyboard::isKeyPressed(Keyboard::I))
 	{
 		inputs[1] += 1;
-	}
+	}*/
 
 	for (int i = 0; i < GGPO_MAX_PLAYERS; ++i)
 	{
@@ -507,7 +525,7 @@ void TestGame::GGPORunFrame()
 
 	assert(ngs.local_player_handle != GGPO_INVALID_HANDLE);
 
-	int input = currInputs[0];
+	int input = currInputs[localIndex];
 	GGPOErrorCode result = ggpo_add_local_input(ggpo, ngs.local_player_handle, &input, sizeof(input));
 	//cout << "local player handle: " << ngs->local_player_handle << "\n";
 
@@ -564,7 +582,7 @@ void TestGame::FullFrameUpdate()
 
 	accumulator += frameTime;
 
-	preScreenTexture->clear();
+	
 
 
 	if (accumulator >= TIMESTEP && timeSyncFrames > 0)
@@ -631,7 +649,7 @@ void TestGame::Run()
 		
 		preScreenTexture->clear();
 		
-		//FullFrameUpdate();
+		FullFrameUpdate();
 
 		
 
@@ -643,10 +661,6 @@ void TestGame::Run()
 		//preTexSprite.setScale(.5, .5);
 		window->clear(Color::White);
 		window->draw(preTexSprite);
-		window->display();
-
-		
-
 		window->display();
 	}
 

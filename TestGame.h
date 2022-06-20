@@ -154,6 +154,8 @@ struct TestGame
 
 	GGPOPlayer ggpoPlayers[GGPO_MAX_PLAYERS];
 
+	bool isSyncTest;
+
 	sf::RenderTexture *preScreenTexture;
 
 	TestGame();
