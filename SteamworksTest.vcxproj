@@ -129,6 +129,7 @@
     <ClCompile Include="ggpo\ggponet.cpp" />
     <ClCompile Include="ggpo\input_queue.cpp" />
     <ClCompile Include="ggpo\log.cpp" />
+    <ClCompile Include="ggpo\network\sdr.cpp" />
     <ClCompile Include="ggpo\network\sdr_proto.cpp" />
     <ClCompile Include="ggpo\network\udp.cpp" />
     <ClCompile Include="ggpo\network\udp_proto.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NetworkingTest.cpp" />
     <ClCompile Include="Tester.cpp" />
+    <ClCompile Include="TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ggpo\backends\backend.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="ggpo\ggponet.h" />
     <ClInclude Include="ggpo\input_queue.h" />
     <ClInclude Include="ggpo\log.h" />
+    <ClInclude Include="ggpo\network\sdr.h" />
     <ClInclude Include="ggpo\network\sdr_proto.h" />
     <ClInclude Include="ggpo\network\udp.h" />
     <ClInclude Include="ggpo\network\udp_msg.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="LobbyTester.h" />
     <ClInclude Include="NetworkingTest.h" />
     <ClInclude Include="Tester.h" />
+    <ClInclude Include="TestGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

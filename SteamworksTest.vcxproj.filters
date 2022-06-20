@@ -102,6 +102,12 @@
     <ClInclude Include="ggpo\network\sdr_proto.h">
       <Filter>GGPO\Network</Filter>
     </ClInclude>
+    <ClInclude Include="ggpo\network\sdr.h">
+      <Filter>GGPO\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -160,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="ggpo\network\sdr_proto.cpp">
       <Filter>GGPO\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\network\sdr.cpp">
+      <Filter>GGPO\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGame.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

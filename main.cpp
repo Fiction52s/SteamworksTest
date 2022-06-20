@@ -7,6 +7,7 @@
 #include "Tester.h"
 #include "LobbyTester.h"
 #include "NetworkingTest.h"
+#include "TestGame.h"
 //#include "steam/isteamremotestorage.h"
 
 using namespace std;
@@ -455,9 +456,9 @@ void SetupWindow()
 int main()
 {
 
-	SetupWindow();
+	//SetupWindow();
 
-	state = S_IDLE;
+	//state = S_IDLE;
 	//if (SteamAPI_RestartAppIfNecessary(1987710))
 	//if (SteamAPI_RestartAppIfNecessary(k_uAppIdInvalid))
 	//{
@@ -546,52 +547,57 @@ int main()
 
 	OnQueryCompletedCallResult.Set(sendQuestAPICall, &tester, &WorkshopTester::OnQueryCompleted);*/
 
-	LobbyTester lobbyTester;
+	//LobbyTester lobbyTester;
 
-	CSteamID myId = SteamUser()->GetSteamID();
+	//CSteamID myId = SteamUser()->GetSteamID();
 
-	//nt.CreateListenSocket();
-	//nt.Test(myId);
+	////nt.CreateListenSocket();
+	////nt.Test(myId);
 
-	lobbyTester.FindLobby();
 	//lobbyTester.FindLobby();
-	//SteamFriends()->ActivateGameOverlay("friends");
+	////lobbyTester.FindLobby();
+	////SteamFriends()->ActivateGameOverlay("friends");
 
-	bool quit = false;
-	Event ev;
+	//bool quit = false;
+	//Event ev;
 
-	int frame = 0;
+	//int frame = 0;
 
-	while (!quit)
-	{
-		while (window->pollEvent(ev))
-		{
-			switch (ev.type)
-			{
-			case sf::Event::Closed:
-				quit = true;
-				break;
-			}
-		}
+	//while (!quit)
+	//{
+	//	while (window->pollEvent(ev))
+	//	{
+	//		switch (ev.type)
+	//		{
+	//		case sf::Event::Closed:
+	//			quit = true;
+	//			break;
+	//		}
+	//	}
 
-		lobbyTester.Update();
+	//	lobbyTester.Update();
 
-		//SteamFriends()->ActivateGameOverlay("friends");
+	//	//SteamFriends()->ActivateGameOverlay("friends");
 
-		//nt.Update();
+	//	//nt.Update();
 
-		SteamAPI_RunCallbacks();
-		window->clear(Color::Green);
-		window->display();
+	//	SteamAPI_RunCallbacks();
+	//	window->clear(Color::Green);
+	//	window->display();
 
-		++frame;
-	}
+	//	++frame;
+	//}
 
+	TestGame *game = new TestGame;
+
+	game->Run();
+
+	delete game;
 
 	//int x;
 	//cin >> x;
 
-	window->close();
+	//window->close();
 
 	//SteamMatchmaking()->LeaveLobby(lobbyTester.m_steamIDLobby);
 	//lobbyTester.nt.CloseConnection();
@@ -600,7 +606,7 @@ int main()
 	//nt.CloseConnection
 
 
-	delete window;
+	//delete window;
 
 	SteamAPI_Shutdown();
 }

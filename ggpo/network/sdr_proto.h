@@ -5,8 +5,8 @@
 * in the LICENSE file.
 */
 
-#ifndef _UDP_PROTO_H_
-#define _UDP_PROTO_H_
+#ifndef _SDR_PROTO_H_
+#define _SDR_PROTO_H_
 
 #include "poll.h"
 #include "udp.h"
