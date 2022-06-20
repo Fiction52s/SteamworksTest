@@ -126,6 +126,7 @@
     <ClCompile Include="ggpo\backends\synctest.cpp" />
     <ClCompile Include="ggpo\bitvector.cpp" />
     <ClCompile Include="ggpo\game_input.cpp" />
+    <ClCompile Include="ggpo\ggponet.cpp" />
     <ClCompile Include="ggpo\input_queue.cpp" />
     <ClCompile Include="ggpo\log.cpp" />
     <ClCompile Include="ggpo\network\udp.cpp" />

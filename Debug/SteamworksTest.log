@@ -1,8 +1,3 @@
-﻿  main.cpp
-  udp.cpp
-  Tester.cpp
-  NetworkingTest.cpp
-  LobbyTester.cpp
-  Generating Code...
+﻿  ggponet.cpp
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.exe
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.pdb (Full PDB)

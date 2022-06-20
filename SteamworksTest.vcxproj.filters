@@ -152,5 +152,8 @@
     <ClCompile Include="ggpo\timesync.cpp">
       <Filter>GGPO</Filter>
     </ClCompile>
+    <ClCompile Include="ggpo\ggponet.cpp">
+      <Filter>GGPO\Public</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
