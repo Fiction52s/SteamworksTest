@@ -1,3 +1,20 @@
-﻿  ggponet.cpp
+﻿  timesync.cpp
+  sync.cpp
+  poll.cpp
+  platform_windows.cpp
+  udp_proto.cpp
+  sdr_proto.cpp
+  log.cpp
+  input_queue.cpp
+  game_input.cpp
+  bitvector.cpp
+  Generating Code...
+  Compiling...
+  udp.cpp
+  ggponet.cpp
+  synctest.cpp
+  spectator.cpp
+  p2p.cpp
+  Generating Code...
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.exe
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.pdb (Full PDB)

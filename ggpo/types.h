@@ -22,16 +22,17 @@
  */
 #pragma warning(disable: 4018 4100 4127 4201 4389 4800)
 
+#include "steam\steam_api.h"
 /*
  * Simple types
  */
-typedef unsigned char uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint32;
-typedef unsigned char byte;
-typedef char int8;
-typedef short int16;
-typedef int int32;
+//typedef unsigned char uint8;
+//typedef unsigned short uint16;
+//typedef unsigned int uint32;
+//typedef unsigned char byte;
+//typedef char int8;
+//typedef short int16;
+//typedef int int32;
 
 /*
  * Additional headers

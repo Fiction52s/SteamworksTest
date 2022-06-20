@@ -129,6 +129,7 @@
     <ClCompile Include="ggpo\ggponet.cpp" />
     <ClCompile Include="ggpo\input_queue.cpp" />
     <ClCompile Include="ggpo\log.cpp" />
+    <ClCompile Include="ggpo\network\sdr_proto.cpp" />
     <ClCompile Include="ggpo\network\udp.cpp" />
     <ClCompile Include="ggpo\network\udp_proto.cpp" />
     <ClCompile Include="ggpo\platform_windows.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="ggpo\ggponet.h" />
     <ClInclude Include="ggpo\input_queue.h" />
     <ClInclude Include="ggpo\log.h" />
+    <ClInclude Include="ggpo\network\sdr_proto.h" />
     <ClInclude Include="ggpo\network\udp.h" />
     <ClInclude Include="ggpo\network\udp_msg.h" />
     <ClInclude Include="ggpo\network\udp_proto.h" />

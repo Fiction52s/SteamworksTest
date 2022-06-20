@@ -99,6 +99,9 @@
     <ClInclude Include="ggpo\ggponet.h">
       <Filter>GGPO\Public</Filter>
     </ClInclude>
+    <ClInclude Include="ggpo\network\sdr_proto.h">
+      <Filter>GGPO\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -154,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="ggpo\ggponet.cpp">
       <Filter>GGPO\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\network\sdr_proto.cpp">
+      <Filter>GGPO\Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
