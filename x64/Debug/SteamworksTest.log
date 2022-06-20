@@ -1,0 +1,2 @@
+﻿  main.cpp
+c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\main.cpp(1): fatal error C1083: Cannot open include file: 'steam/steam_api.h': No such file or directory

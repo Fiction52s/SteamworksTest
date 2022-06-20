@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="GGPO">
+      <UniqueIdentifier>{8252e0f6-a1a6-4f2f-a59c-a696b73fd876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GGPO\Backends">
+      <UniqueIdentifier>{b0201033-bcb8-42be-bbad-f95e051aa87f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GGPO\Network">
+      <UniqueIdentifier>{bb5fc597-ecb1-48aa-9244-1d7d218032da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GGPO\Public">
+      <UniqueIdentifier>{91c77200-1de0-47a4-8954-45d088dbcb15}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tester.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyTester.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingTest.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\backends\backend.h">
+      <Filter>GGPO\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\backends\p2p.h">
+      <Filter>GGPO\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\backends\spectator.h">
+      <Filter>GGPO\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\backends\synctest.h">
+      <Filter>GGPO\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\network\udp.h">
+      <Filter>GGPO\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\network\udp_msg.h">
+      <Filter>GGPO\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\network\udp_proto.h">
+      <Filter>GGPO\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\bitvector.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\game_input.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\input_queue.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\log.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\platform_windows.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\poll.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\ring_buffer.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\static_buffer.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\sync.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\timesync.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\types.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\zconf.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\zlib.h">
+      <Filter>GGPO</Filter>
+    </ClInclude>
+    <ClInclude Include="ggpo\ggponet.h">
+      <Filter>GGPO\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\backends\p2p.cpp">
+      <Filter>GGPO\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\backends\spectator.cpp">
+      <Filter>GGPO\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\backends\synctest.cpp">
+      <Filter>GGPO\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\network\udp.cpp">
+      <Filter>GGPO\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\network\udp_proto.cpp">
+      <Filter>GGPO\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\bitvector.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\game_input.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\input_queue.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\log.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\platform_windows.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\poll.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\sync.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+    <ClCompile Include="ggpo\timesync.cpp">
+      <Filter>GGPO</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

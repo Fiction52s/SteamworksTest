@@ -1,0 +1,15 @@
+﻿log.obj : error LNK2001: unresolved external symbol __imp__timeGetTime@0
+udp.obj : error LNK2001: unresolved external symbol __imp__WSAGetLastError@0
+udp.obj : error LNK2001: unresolved external symbol __imp__setsockopt@20
+udp.obj : error LNK2001: unresolved external symbol __imp__ioctlsocket@12
+udp.obj : error LNK2001: unresolved external symbol __imp__sendto@24
+udp.obj : error LNK2001: unresolved external symbol __imp__htons@4
+udp.obj : error LNK2001: unresolved external symbol _inet_ntop@16
+udp.obj : error LNK2001: unresolved external symbol __imp__htonl@4
+udp.obj : error LNK2001: unresolved external symbol __imp__recvfrom@24
+udp.obj : error LNK2001: unresolved external symbol __imp__ntohs@4
+udp.obj : error LNK2001: unresolved external symbol __imp__socket@12
+udp.obj : error LNK2001: unresolved external symbol __imp__closesocket@4
+udp.obj : error LNK2001: unresolved external symbol __imp__bind@12
+udp_proto.obj : error LNK2001: unresolved external symbol __imp__inet_pton@12
+C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Release\SteamworksTest.exe : fatal error LNK1120: 14 unresolved externals
