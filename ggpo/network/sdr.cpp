@@ -39,17 +39,19 @@
 //}
 
 Sdr::Sdr() :
-	_socket(INVALID_SOCKET),
+	connection(0),
 	_callbacks(NULL)
 {
 }
 
 Sdr::~Sdr(void)
 {
-	if (_socket != INVALID_SOCKET) {
+	//CloseConnection()?
+
+	/*if (_socket != INVALID_SOCKET) {
 		closesocket(_socket);
 		_socket = INVALID_SOCKET;
-	}
+	}*/
 }
 
 void
@@ -69,18 +71,18 @@ Sdr::Init(uint16 port, Poll *poll, Callbacks *callbacks)
 //replace SendTo with SteamNetworkingSockets()->SendMessageToConnection()
 //instead of sending to an IP address, send to our already established connection
 void
-Sdr::SendTo(char *buffer, int len, int flags, struct sockaddr *dst, int destlen)
+Sdr::SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connection)
 {
-	struct sockaddr_in *to = (struct sockaddr_in *)dst;
+	EResult res = SteamNetworkingSockets()->SendMessageToConnection(p_connection, buffer, len, k_EP2PSendReliable, NULL);
 
-	int res = sendto(_socket, buffer, len, flags, dst, destlen);
-	if (res == SOCKET_ERROR) {
-		DWORD err = WSAGetLastError();
-		Log("unknown error in sendto (erro: %d  wsaerr: %d).\n", res, err);
+	if (res != k_EResultOK)
+	{
+		Log("unknown error in sendto (erro: %d).\n", res);
 		ASSERT(FALSE && "Unknown error in sendto");
 	}
+
 	char dst_ip[1024];
-	Log("sent packet length %d to %s:%d (ret:%d).\n", len, inet_ntop(AF_INET, (void *)&to->sin_addr, dst_ip, ARRAY_SIZE(dst_ip)), ntohs(to->sin_port), res);
+	Log("sent packet length %d to %d. res: %d\n", len, p_connection, res);
 }
 
 
@@ -90,27 +92,18 @@ bool
 Sdr::OnLoopPoll(void *cookie)
 {
 	uint8          recv_buf[MAX_UDP_PACKET_SIZE];
-	sockaddr_in    recv_addr;
-	int            recv_addr_len;
+	SteamNetworkingMessage_t *messages[1];
 
 	for (;;) {
-		recv_addr_len = sizeof(recv_addr);
-		int len = recvfrom(_socket, (char *)recv_buf, MAX_UDP_PACKET_SIZE, 0, (struct sockaddr *)&recv_addr, &recv_addr_len);
+		int numMsges = SteamNetworkingSockets()->ReceiveMessagesOnConnection(connection, messages, 1);
 
 		// TODO: handle len == 0... indicates a disconnect.
 
-		if (len == -1) {
-			int error = WSAGetLastError();
-			if (error != WSAEWOULDBLOCK) {
-				Log("recvfrom WSAGetLastError returned %d (%x).\n", error, error);
-			}
-			break;
-		}
-		else if (len > 0) {
-			char src_ip[1024];
-			Log("recvfrom returned (len:%d  from:%s:%d).\n", len, inet_ntop(AF_INET, (void*)&recv_addr.sin_addr, src_ip, ARRAY_SIZE(src_ip)), ntohs(recv_addr.sin_port));
+		if (numMsges == 1)
+		{
+			Log("recvfrom returned (len:%d from %d).\n", messages[0]->GetSize(), connection);
 			UdpMsg *msg = (UdpMsg *)recv_buf;
-			_callbacks->OnMsg(recv_addr, msg, len);
+			_callbacks->OnMsg(connection, msg, messages[0]->GetSize());
 		}
 	}
 	return true;

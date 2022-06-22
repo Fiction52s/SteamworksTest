@@ -13,13 +13,13 @@
 #include "sync.h"
 #include "backend.h"
 #include "timesync.h"
-#include "network/udp_proto.h"
+#include "network/sdr_proto.h"
 
 #define SPECTATOR_FRAME_BUFFER_SIZE    64
 
-class SpectatorBackend : public IQuarkBackend, IPollSink, Udp::Callbacks {
+class SpectatorBackend : public IQuarkBackend, IPollSink, Sdr::Callbacks {
 public:
-   SpectatorBackend(GGPOSessionCallbacks *cb, const char *gamename, uint16 localport, int num_players, int input_size, char *hostip, u_short hostport);
+   SpectatorBackend(GGPOSessionCallbacks *cb, const char *gamename, uint16 localport, int num_players, int input_size, HSteamNetConnection p_connection);
    virtual ~SpectatorBackend();
 
 
@@ -36,19 +36,19 @@ public:
    virtual GGPOErrorCode SetDisconnectNotifyStart(int timeout) { return GGPO_ERRORCODE_UNSUPPORTED; }
 
 public:
-   virtual void OnMsg(sockaddr_in &from, UdpMsg *msg, int len);
+   virtual void OnMsg(HSteamNetConnection p_connection, UdpMsg *msg, int len);
 
 protected:
-   void PollUdpProtocolEvents(void);
+   void PollSdrProtocolEvents(void);
    void CheckInitialSync(void);
 
-   void OnUdpProtocolEvent(UdpProtocol::Event &e);
+   void OnSdrProtocolEvent(SdrProtocol::Event &e);
 
 protected:
    GGPOSessionCallbacks  _callbacks;
    Poll                  _poll;
-   Udp                   _udp;
-   UdpProtocol           _host;
+   Sdr                   _sdr;
+   SdrProtocol           _host;
    bool                  _synchronizing;
    int                   _input_size;
    int                   _num_players;

@@ -34,7 +34,7 @@ public:
    virtual GGPOErrorCode SetDisconnectNotifyStart(int timeout);
 
 public:
-   virtual void OnMsg(sockaddr_in &from, UdpMsg *msg, int len);
+   virtual void OnMsg(HSteamNetConnection p_connection, UdpMsg *msg, int len);
 
 protected:
    GGPOErrorCode PlayerHandleToQueue(GGPOPlayerHandle player, int *queue);
@@ -46,8 +46,8 @@ protected:
    void CheckInitialSync(void);
    int Poll2Players(int current_frame);
    int PollNPlayers(int current_frame);
-   void AddRemotePlayer(char *remoteip, uint16 reportport, int queue);
-   GGPOErrorCode AddSpectator(char *remoteip, uint16 reportport);
+   void AddRemotePlayer(HSteamNetConnection p_connection, int queue);
+   GGPOErrorCode AddSpectator(HSteamNetConnection p_connection);
    virtual void OnSyncEvent(Sync::Event &e) { }
    virtual void OnSdrProtocolEvent(SdrProtocol::Event &e, GGPOPlayerHandle handle);
    virtual void OnSdrProtocolPeerEvent(SdrProtocol::Event &e, int queue);

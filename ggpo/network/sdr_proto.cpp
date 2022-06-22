@@ -49,7 +49,9 @@ SdrProtocol::SdrProtocol() :
 	for (int i = 0; i < ARRAY_SIZE(_peer_connect_status); i++) {
 		_peer_connect_status[i].last_frame = -1;
 	}
-	memset(&_peer_addr, 0, sizeof _peer_addr);
+
+	connection = 0;
+	//memset(&_peer_addr, 0, sizeof _peer_addr);
 	_oo_packet.msg = NULL;
 
 	_send_latency = Platform::GetConfigInt("ggpo.network.delay");
@@ -65,17 +67,14 @@ void
 SdrProtocol::Init(Sdr *sdr,
 	Poll &poll,
 	int queue,
-	char *ip,
-	u_short port,
+	HSteamNetConnection p_connection,
 	UdpMsg::connect_status *status)
 {
 	_sdr = sdr;
 	_queue = queue;
 	_local_connect_status = status;
 
-	_peer_addr.sin_family = AF_INET;
-	_peer_addr.sin_port = htons(port);
-	inet_pton(AF_INET, ip, &_peer_addr.sin_addr.s_addr);
+	connection = p_connection;
 
 	do {
 		_magic_number = (uint16)rand();
@@ -285,19 +284,29 @@ SdrProtocol::SendMsg(UdpMsg *msg)
 	msg->hdr.magic = _magic_number;
 	msg->hdr.sequence_number = _next_send_seq++;
 
-	_send_queue.push(QueueEntry(Platform::GetCurrentTimeMS(), _peer_addr, msg));
+	_send_queue.push(QueueEntry(Platform::GetCurrentTimeMS(), connection, msg));
 	PumpSendQueue();
 }
 
 bool
-SdrProtocol::HandlesMsg(sockaddr_in &from,
+SdrProtocol::HandlesMsg(HSteamNetConnection p_connection,
 	UdpMsg *msg)
 {
 	if (!_sdr) {
 		return false;
 	}
-	return _peer_addr.sin_addr.S_un.S_addr == from.sin_addr.S_un.S_addr &&
-		_peer_addr.sin_port == from.sin_port;
+
+
+	//not sure what this does lol or if HSteamNetConnection is even needed as a parameter here??
+	//making a guess though
+
+	return p_connection == connection;
+
+	//return true; 
+
+
+	//return _peer_addr.sin_addr.S_un.S_addr == from.sin_addr.S_un.S_addr &&
+	//	_peer_addr.sin_port == from.sin_port;
 }
 
 void
@@ -737,13 +746,12 @@ SdrProtocol::PumpSendQueue()
 			Log("creating rogue oop (seq: %d  delay: %d)\n", entry.msg->hdr.sequence_number, delay);
 			_oo_packet.send_time = Platform::GetCurrentTimeMS() + delay;
 			_oo_packet.msg = entry.msg;
-			_oo_packet.dest_addr = entry.dest_addr;
+			_oo_packet.connection = entry.connection;
 		}
 		else {
-			ASSERT(entry.dest_addr.sin_addr.s_addr);
+			//ASSERT(entry.dest_addr.sin_addr.s_addr);
 
-			_sdr->SendTo((char *)entry.msg, entry.msg->PacketSize(), 0,
-				(struct sockaddr *)&entry.dest_addr, sizeof entry.dest_addr);
+			_sdr->SendTo((char *)entry.msg, entry.msg->PacketSize(), 0, entry.connection);
 
 			delete entry.msg;
 		}
@@ -751,8 +759,7 @@ SdrProtocol::PumpSendQueue()
 	}
 	if (_oo_packet.msg && _oo_packet.send_time < Platform::GetCurrentTimeMS()) {
 		Log("sending rogue oop!");
-		_sdr->SendTo((char *)_oo_packet.msg, _oo_packet.msg->PacketSize(), 0,
-			(struct sockaddr *)&_oo_packet.dest_addr, sizeof _oo_packet.dest_addr);
+		_sdr->SendTo((char *)_oo_packet.msg, _oo_packet.msg->PacketSize(), 0, _oo_packet.connection);
 
 		delete _oo_packet.msg;
 		_oo_packet.msg = NULL;

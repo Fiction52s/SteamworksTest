@@ -65,7 +65,7 @@ public:
 	SdrProtocol();
 	virtual ~SdrProtocol();
 
-	void Init(Sdr *sdr, Poll &p, int queue, char *ip, u_short port, UdpMsg::connect_status *status);
+	void Init(Sdr *sdr, Poll &p, int queue, HSteamNetConnection p_connection, UdpMsg::connect_status *status);
 
 	void Synchronize();
 	bool GetPeerConnectStatus(int id, int *frame);
@@ -74,7 +74,7 @@ public:
 	bool IsRunning() { return _current_state == Running; }
 	void SendInput(GameInput &input);
 	void SendInputAck();
-	bool HandlesMsg(sockaddr_in &from, UdpMsg *msg);
+	bool HandlesMsg(HSteamNetConnection p_connection, UdpMsg *msg);
 	void OnMsg(UdpMsg *msg, int len);
 	void Disconnect();
 
@@ -96,11 +96,12 @@ protected:
 	};
 	struct QueueEntry {
 		int         queue_time;
-		sockaddr_in dest_addr;
+		//sockaddr_in dest_addr;
+		HSteamNetConnection connection;
 		UdpMsg      *msg;
 
 		QueueEntry() {}
-		QueueEntry(int time, sockaddr_in &dst, UdpMsg *m) : queue_time(time), dest_addr(dst), msg(m) { }
+		QueueEntry(int time, HSteamNetConnection p_connection, UdpMsg *m) : queue_time(time), connection(p_connection), msg(m) { }
 	};
 
 	bool CreateSocket(int retries);
@@ -129,7 +130,8 @@ protected:
 	* Network transmission information
 	*/
 	Sdr            *_sdr;
-	sockaddr_in    _peer_addr;
+	HSteamNetConnection connection;
+	//sockaddr_in    _peer_addr;
 	uint16         _magic_number;
 	int            _queue;
 	uint16         _remote_magic_number;
@@ -138,7 +140,7 @@ protected:
 	int            _oop_percent;
 	struct {
 		int         send_time;
-		sockaddr_in dest_addr;
+		HSteamNetConnection connection;
 		UdpMsg*     msg;
 	}              _oo_packet;
 	RingBuffer<QueueEntry, 64> _send_queue;

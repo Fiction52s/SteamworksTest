@@ -29,7 +29,7 @@ public:
 
 	struct Callbacks {
 		virtual ~Callbacks() { }
-		virtual void OnMsg(sockaddr_in &from, UdpMsg *msg, int len) = 0;
+		virtual void OnMsg(HSteamNetConnection p_connection, UdpMsg *msg, int len) = 0;
 	};
 
 
@@ -41,7 +41,7 @@ public:
 
 	void Init(uint16 port, Poll *p, Callbacks *callbacks);
 
-	void SendTo(char *buffer, int len, int flags, struct sockaddr *dst, int destlen);
+	void SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connection);
 
 	virtual bool OnLoopPoll(void *cookie);
 
@@ -50,8 +50,8 @@ public:
 
 protected:
 	// Network transmission information
-	SOCKET         _socket;
-
+	//SOCKET         _socket;
+	HSteamNetConnection connection;
 	// state management
 	Callbacks      *_callbacks;
 	Poll           *_poll;

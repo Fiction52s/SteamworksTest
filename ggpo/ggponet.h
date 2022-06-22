@@ -8,11 +8,15 @@
 #ifndef _GGPONET_H_
 #define _GGPONET_H_
 
+
+#include "steam/steam_api.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include <stdarg.h>
+
 
 // On windows, export at build time and import at runtime.
 // ELF systems don't need an explicit export/import.
@@ -80,6 +84,7 @@ typedef struct GGPOPlayer {
       struct {
          char           ip_address[32];
          unsigned short port;
+		 HSteamNetConnection connection;
       } remote;
    } u;
 } GGPOPlayer;
