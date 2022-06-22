@@ -38,7 +38,7 @@ SdrProtocol::SdrProtocol() :
 	_connected(false),
 	_next_send_seq(0),
 	_next_recv_seq(0),
-	_udp(NULL)
+	_sdr(NULL)
 {
 	_last_sent_input.init(-1, NULL, 1);
 	_last_received_input.init(-1, NULL, 1);
@@ -62,14 +62,14 @@ SdrProtocol::~SdrProtocol()
 }
 
 void
-SdrProtocol::Init(Udp *udp,
+SdrProtocol::Init(Sdr *sdr,
 	Poll &poll,
 	int queue,
 	char *ip,
 	u_short port,
 	UdpMsg::connect_status *status)
 {
-	_udp = udp;
+	_sdr = sdr;
 	_queue = queue;
 	_local_connect_status = status;
 
@@ -86,7 +86,7 @@ SdrProtocol::Init(Udp *udp,
 void
 SdrProtocol::SendInput(GameInput &input)
 {
-	if (_udp) {
+	if (_sdr) {
 		if (_current_state == Running) {
 			/*
 			* Check to see if this is a good time to adjust for the rift...
@@ -183,7 +183,7 @@ SdrProtocol::GetEvent(SdrProtocol::Event &e)
 bool
 SdrProtocol::OnLoopPoll(void *cookie)
 {
-	if (!_udp) {
+	if (!_sdr) {
 		return true;
 	}
 
@@ -247,7 +247,7 @@ SdrProtocol::OnLoopPoll(void *cookie)
 	case Disconnected:
 		if (_shutdown_timeout < now) {
 			Log("Shutting down udp connection.\n");
-			_udp = NULL;
+			_sdr = NULL;
 			_shutdown_timeout = 0;
 		}
 
@@ -293,7 +293,7 @@ bool
 SdrProtocol::HandlesMsg(sockaddr_in &from,
 	UdpMsg *msg)
 {
-	if (!_udp) {
+	if (!_sdr) {
 		return false;
 	}
 	return _peer_addr.sin_addr.S_un.S_addr == from.sin_addr.S_un.S_addr &&
@@ -387,7 +387,7 @@ SdrProtocol::QueueEvent(const SdrProtocol::Event &evt)
 void
 SdrProtocol::Synchronize()
 {
-	if (_udp) {
+	if (_sdr) {
 		_current_state = Syncing;
 		_state.sync.roundtrips_remaining = NUM_SYNC_PACKETS;
 		SendSyncRequest();
@@ -742,7 +742,7 @@ SdrProtocol::PumpSendQueue()
 		else {
 			ASSERT(entry.dest_addr.sin_addr.s_addr);
 
-			_udp->SendTo((char *)entry.msg, entry.msg->PacketSize(), 0,
+			_sdr->SendTo((char *)entry.msg, entry.msg->PacketSize(), 0,
 				(struct sockaddr *)&entry.dest_addr, sizeof entry.dest_addr);
 
 			delete entry.msg;
@@ -751,7 +751,7 @@ SdrProtocol::PumpSendQueue()
 	}
 	if (_oo_packet.msg && _oo_packet.send_time < Platform::GetCurrentTimeMS()) {
 		Log("sending rogue oop!");
-		_udp->SendTo((char *)_oo_packet.msg, _oo_packet.msg->PacketSize(), 0,
+		_sdr->SendTo((char *)_oo_packet.msg, _oo_packet.msg->PacketSize(), 0,
 			(struct sockaddr *)&_oo_packet.dest_addr, sizeof _oo_packet.dest_addr);
 
 		delete _oo_packet.msg;

@@ -12,6 +12,7 @@
 #include "udp_msg.h"
 #include "ggponet.h"
 #include "ring_buffer.h"
+#include "steam/steam_api.h"
 
 #define MAX_UDP_ENDPOINTS     16
 

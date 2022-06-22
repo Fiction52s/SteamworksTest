@@ -15,6 +15,7 @@
 #include "timesync.h"
 #include "ggponet.h"
 #include "ring_buffer.h"
+#include "sdr.h"
 //#include <steam/steam_api.h>
 
 class SdrProtocol : public IPollSink
@@ -64,11 +65,11 @@ public:
 	SdrProtocol();
 	virtual ~SdrProtocol();
 
-	void Init(Udp *udp, Poll &p, int queue, char *ip, u_short port, UdpMsg::connect_status *status);
+	void Init(Sdr *sdr, Poll &p, int queue, char *ip, u_short port, UdpMsg::connect_status *status);
 
 	void Synchronize();
 	bool GetPeerConnectStatus(int id, int *frame);
-	bool IsInitialized() { return _udp != NULL; }
+	bool IsInitialized() { return _sdr != NULL; }
 	bool IsSynchronized() { return _current_state == Running; }
 	bool IsRunning() { return _current_state == Running; }
 	void SendInput(GameInput &input);
@@ -127,7 +128,7 @@ protected:
 	/*
 	* Network transmission information
 	*/
-	Udp            *_udp;
+	Sdr            *_sdr;
 	sockaddr_in    _peer_addr;
 	uint16         _magic_number;
 	int            _queue;
