@@ -41,7 +41,14 @@ Peer2PeerBackend::Peer2PeerBackend(GGPOSessionCallbacks *cb,
    /*
     * Initialize the UDP port
     */
-   _sdr.Init(localport, &_poll, this);
+
+   _sdr = new Sdr[_num_players];
+
+   for (int i = 0; i < _num_players; ++i)
+   {
+	   _sdr[i].Init(localport, &_poll, this);
+   }
+   
 
    _endpoints = new SdrProtocol[_num_players];
    memset(_local_connect_status, 0, sizeof(_local_connect_status));
@@ -69,7 +76,7 @@ Peer2PeerBackend::AddRemotePlayer(HSteamNetConnection p_connection,
     */
    _synchronizing = true;
    
-   _endpoints[queue].Init(&_sdr, _poll, queue, p_connection, _local_connect_status);
+   _endpoints[queue].Init(&_sdr[queue], _poll, queue, p_connection, _local_connect_status);
    _endpoints[queue].SetDisconnectTimeout(_disconnect_timeout);
    _endpoints[queue].SetDisconnectNotifyStart(_disconnect_notify_start);
    _endpoints[queue].Synchronize();
@@ -88,7 +95,7 @@ GGPOErrorCode Peer2PeerBackend::AddSpectator(HSteamNetConnection p_connection)
    }
    int queue = _num_spectators++;
 
-   _spectators[queue].Init(&_sdr, _poll, queue + 1000, p_connection, _local_connect_status);
+   _spectators[queue].Init(&_sdr[queue] , _poll, queue + 1000, p_connection, _local_connect_status);
    _spectators[queue].SetDisconnectTimeout(_disconnect_timeout);
    _spectators[queue].SetDisconnectNotifyStart(_disconnect_notify_start);
    _spectators[queue].Synchronize();

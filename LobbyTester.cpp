@@ -67,6 +67,7 @@ void LobbyTester::RefreshLobbyList()
 		m_SteamCallResultLobbyMatchList.Set(hSteamAPICall, this, &LobbyTester::OnLobbyMatchListCallback);
 
 		action = A_REQUEST_LOBBY_LIST;
+		cout << "refresh lobby list" << endl;
 		//m_pMenu->ShowSearching();
 	}
 }
@@ -107,15 +108,18 @@ void LobbyTester::OnLobbyChatUpdateCallback(LobbyChatUpdate_t *pCallback)
 
 		if (currUser == myId)
 		{
-			//nt.Test(currUser);
-			//break;
 			continue;
 		}
 
-		//test if im the owner
 		nt.Test(currUser);
+
+		//test if im the owner
+		//nt.Test(currUser);
 		//SteamFriends()->GetPersonaName()
 	}
+
+	//test local
+	//nt.Test(myId);
 }
 
 void LobbyTester::OnLobbyChatMessageCallback(LobbyChatMsg_t *pCallback)

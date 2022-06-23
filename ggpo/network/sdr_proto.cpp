@@ -74,6 +74,8 @@ SdrProtocol::Init(Sdr *sdr,
 	_queue = queue;
 	_local_connect_status = status;
 
+	_sdr->connection = p_connection;
+
 	connection = p_connection;
 
 	do {

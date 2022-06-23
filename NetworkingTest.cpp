@@ -13,6 +13,8 @@ NetworkingTest::NetworkingTest()
 
 	connectionOwner = false;
 
+	connected = false;
+
 	
 }
 
@@ -72,11 +74,11 @@ void NetworkingTest::OnConnectionStatusChangedCallback(SteamNetConnectionStatusC
 		string myName = SteamFriends()->GetPersonaName();
 
 		string test = "hello this is a message from " + myName;
-
-
 		//SteamNetworkingMessages()->SendMessageToUser( connection, )
 
-		SteamNetworkingSockets()->SendMessageToConnection(connection, test.c_str(), test.length() + 1, k_EP2PSendReliable, NULL);
+		//SteamNetworkingSockets()->SendMessageToConnection(connection, test.c_str(), test.length() + 1, k_EP2PSendReliable, NULL);
+
+		connected = true;
 	}
 	else if ((pCallback->m_eOldState == k_ESteamNetworkingConnectionState_Connecting
 		|| pCallback->m_eOldState == k_ESteamNetworkingConnectionState_Connected)
@@ -85,12 +87,16 @@ void NetworkingTest::OnConnectionStatusChangedCallback(SteamNetConnectionStatusC
 		cout << "connection closed by peer: " << pCallback->m_info.m_eEndReason << endl;
 
 		SteamNetworkingSockets()->CloseConnection(connection, 0, NULL, false);
+
+		connected = false;
 	}
 	else if ((pCallback->m_eOldState == k_ESteamNetworkingConnectionState_Connecting
 		|| pCallback->m_eOldState == k_ESteamNetworkingConnectionState_Connected)
 		&& pCallback->m_info.m_eState == k_ESteamNetworkingConnectionState_ProblemDetectedLocally)
 	{
 		cout << "connection state problem locally detected: " << pCallback->m_info.m_eEndReason << endl;
+
+		connected = false;
 	}
 	else
 	{

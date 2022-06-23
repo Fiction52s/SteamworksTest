@@ -252,10 +252,7 @@ TestGame::TestGame()
 
 	SetupWindow();
 
-	if (ggpoMode)
-	{
-		InitGGPO();
-	}
+	
 }
 
 TestGame::~TestGame()
@@ -363,15 +360,16 @@ void TestGame::InitGGPO()
 	ggpoPlayers[otherIndex].type = GGPO_PLAYERTYPE_REMOTE;
 	//	local_player = myIndex;
 
-	int ipLen = ipStr.length();
+	/*int ipLen = ipStr.length();
 	for (int i = 0; i < ipLen; ++i)
 	{
 		ggpoPlayers[otherIndex].u.remote.ip_address[i] = ipStr[i];
 	}
 	ggpoPlayers[otherIndex].u.remote.ip_address[ipLen] = '\0';
+	ggpoPlayers[otherIndex].u.remote.port = otherPort;*/
 
-	//ggpoPlayers[otherIndex].u.remote.ip_address = ipStr.c_str();
-	ggpoPlayers[otherIndex].u.remote.port = otherPort;
+
+	ggpoPlayers[otherIndex].u.remote.connection = testConnection;
 
 	int i;
 	for (i = 0; i < num_players; i++) {
@@ -632,6 +630,22 @@ void TestGame::Run()
 	players[0] = new Player(0);
 	players[1] = new Player(1);
 
+	bool res = GetConnection();
+
+	if (!res)
+	{
+		window->close();
+		return;
+	}
+
+
+
+	if (ggpoMode)
+	{
+		InitGGPO();
+	}
+
+
 	bool quit = false;
 	while (!quit)
 	{
@@ -684,4 +698,50 @@ void TestGame::SetupWindow()
 TestGame *TestGame::GetInstance()
 {
 	return currInstance;
+}
+
+bool TestGame::GetConnection()
+{
+	lobbyTester.FindLobby();
+	bool quit = false;
+	while (!quit)
+	{
+		sf::Event ev;
+		while (window->pollEvent(ev))
+		{
+			switch (ev.type)
+			{
+			case sf::Event::Closed:
+				quit = true;
+				break;
+			}
+		}
+
+
+		preScreenTexture->clear();
+
+
+		lobbyTester.Update();
+
+		if (lobbyTester.nt.connected)
+		{
+			testConnection = lobbyTester.nt.connection;
+			return true;
+		}
+
+		SteamAPI_RunCallbacks();
+
+
+		preScreenTexture->display();
+		const Texture &preTex = preScreenTexture->getTexture();
+
+		Sprite preTexSprite(preTex);
+		//preTexSprite.setPosition(-960 / 2, -540 / 2);
+		//preTexSprite.setScale(.5, .5);
+		window->clear(Color::White);
+		window->draw(preTexSprite);
+		window->display();
+	}
+
+	return false;
 }

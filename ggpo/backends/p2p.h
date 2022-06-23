@@ -57,7 +57,7 @@ protected:
    GGPOSessionCallbacks  _callbacks;
    Poll                  _poll;
    Sync                  _sync;
-   Sdr                   _sdr;
+   Sdr                   *_sdr;
    SdrProtocol           *_endpoints;
    SdrProtocol           _spectators[GGPO_MAX_SPECTATORS];
    int                   _num_spectators;

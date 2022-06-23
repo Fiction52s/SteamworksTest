@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include "ggponet.h"
 #include "steam\steam_api.h"
+#include "LobbyTester.h"
 #pragma comment(lib, "wsock32.lib")
 
 #define TIMESTEP (1.0 / 60.0)
@@ -132,6 +133,9 @@ struct TestGame
 	static TestGame *currInstance;
 	static TestGame *GetInstance();
 
+	HSteamNetConnection testConnection;
+	LobbyTester lobbyTester;
+
 	GGPONonGameState ngs;
 	GGPOSession *ggpo;
 	int timeSyncFrames;
@@ -164,6 +168,7 @@ struct TestGame
 	bool LoadState(unsigned char *bytes, int len);
 	bool SaveState(unsigned char **buffer,
 		int *len, int *checksum, int frame);
+	bool GetConnection();
 	void GameUpdate();
 	void GGPORunFrame();
 	void RegularRunFrame();

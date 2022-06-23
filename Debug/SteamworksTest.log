@@ -1,16 +1,3 @@
-﻿  TestGame.cpp
-  Generating Code...
-  Compiling...
-  main.cpp
-  sync.cpp
-  udp_proto.cpp
-  udp.cpp
-  sdr_proto.cpp
-  sdr.cpp
-  ggponet.cpp
-  synctest.cpp
-  spectator.cpp
-  p2p.cpp
-  Generating Code...
+﻿  sdr.cpp
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.exe
   SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Debug\SteamworksTest.pdb (Full PDB)

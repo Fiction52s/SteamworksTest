@@ -39,6 +39,7 @@ protected:
 public:
 	Sdr();
 
+	//void Init(uint16 port, HSteamNetConnection p_connection, Poll *p, Callbacks *callbacks);
 	void Init(uint16 port, Poll *p, Callbacks *callbacks);
 
 	void SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connection);
@@ -48,10 +49,13 @@ public:
 public:
 	~Sdr(void);
 
+	HSteamNetConnection connection;
+
 protected:
 	// Network transmission information
 	//SOCKET         _socket;
-	HSteamNetConnection connection;
+	//HSteamNetConnection connection;
+	
 	// state management
 	Callbacks      *_callbacks;
 	Poll           *_poll;

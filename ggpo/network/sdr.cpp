@@ -59,6 +59,8 @@ Sdr::Init(uint16 port, Poll *poll, Callbacks *callbacks)
 {
 	_callbacks = callbacks;
 
+	//connection = p_connection;
+
 	_poll = poll;
 	_poll->RegisterLoop(this);
 
@@ -91,20 +93,29 @@ Sdr::SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connection)
 bool
 Sdr::OnLoopPoll(void *cookie)
 {
-	uint8          recv_buf[MAX_UDP_PACKET_SIZE];
-	SteamNetworkingMessage_t *messages[1];
+	if (connection > 0) //make cleaner later
+	{
+		//uint8          recv_buf[MAX_UDP_PACKET_SIZE];
+		SteamNetworkingMessage_t *messages[1];
 
-	for (;;) {
-		int numMsges = SteamNetworkingSockets()->ReceiveMessagesOnConnection(connection, messages, 1);
-
-		// TODO: handle len == 0... indicates a disconnect.
-
-		if (numMsges == 1)
+		for (;;) 
 		{
-			Log("recvfrom returned (len:%d from %d).\n", messages[0]->GetSize(), connection);
-			UdpMsg *msg = (UdpMsg *)recv_buf;
-			_callbacks->OnMsg(connection, msg, messages[0]->GetSize());
+			int numMsges = SteamNetworkingSockets()->ReceiveMessagesOnConnection(connection, messages, 1);
+
+			// TODO: handle len == 0... indicates a disconnect.
+
+			if (numMsges == 1)
+			{
+				Log("recvfrom returned (len:%d from %d).\n", messages[0]->GetSize(), connection);
+				UdpMsg *msg = (UdpMsg *)messages[0]->GetData();
+				_callbacks->OnMsg(connection, msg, messages[0]->GetSize());
+			}
+			else
+			{
+				break;
+			}
 		}
+
 	}
 	return true;
 }

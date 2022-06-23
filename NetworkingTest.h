@@ -16,6 +16,7 @@ struct NetworkingTest
 	void CreateListenSocket();
 
 	HSteamNetConnection connection;
+	bool connected;
 	bool connectionOwner;
 
 	

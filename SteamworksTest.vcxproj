@@ -97,7 +97,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\ficti\Documents\Libs\SFML-2.4.2\include;C:\Users\ficti\Documents\Libs\boost_1_59_0;C:\Users\ficti\Documents\Libs\sfeMovie\Include;C:\Program Files (x86)\Windows Kits\10;C:\Users\ficti\Documents\Libs\libusb-1.0.22\include\libusb-1.0;C:\Users\ficti\Documents\Libs\vJoy218SDK-291116\SDK\inc;D:\Libraries\json-develop\include;C:\Users\ficti\Documents\GitHub\Breakneck-1\Code;C:\Users\ficti\Documents\Libs\ggpo-master\src\include;D:\Libraries\DualSenseWindows_V0.1;C:\Users\ficti\Documents\Libs\steamworks_sdk_153a\sdk\public;C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\SteamworksTest\ggpo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ficti\Documents\Libs\SFML-2.4.2\include;C:\Users\ficti\Documents\Libs\boost_1_59_0;C:\Users\ficti\Documents\Libs\sfeMovie\Include;C:\Program Files (x86)\Windows Kits\10;C:\Users\ficti\Documents\Libs\libusb-1.0.22\include\libusb-1.0;C:\Users\ficti\Documents\Libs\vJoy218SDK-291116\SDK\inc;D:\Libraries\json-develop\include;C:\Users\ficti\Documents\GitHub\Breakneck-1\Code;D:\Libraries\DualSenseWindows_V0.1;C:\Users\ficti\Documents\Libs\steamworks_sdk_153a\sdk\public;C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\SteamworksTest\ggpo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

@@ -549,10 +549,10 @@ int main()
 
 	//LobbyTester lobbyTester;
 
-	//CSteamID myId = SteamUser()->GetSteamID();
+	/*CSteamID myId = SteamUser()->GetSteamID();
 
-	////nt.CreateListenSocket();
-	////nt.Test(myId);
+	nt.CreateListenSocket();
+	nt.Test(myId);*/
 
 	//lobbyTester.FindLobby();
 	////lobbyTester.FindLobby();
@@ -575,7 +575,8 @@ int main()
 	//		}
 	//	}
 
-	//	lobbyTester.Update();
+	//	nt.Update();
+	//	//lobbyTester.Update();
 
 	//	//SteamFriends()->ActivateGameOverlay("friends");
 
@@ -594,14 +595,15 @@ int main()
 
 	delete game;
 
-	//int x;
-	//cin >> x;
+	/*int x;
+	cin >> x;*/
 
 	//window->close();
 
 	//SteamMatchmaking()->LeaveLobby(lobbyTester.m_steamIDLobby);
 	//lobbyTester.nt.CloseConnection();
 
+	//nt.CloseConnection();
 	//lobbyTester.nt.CloseConnection();
 	//nt.CloseConnection
 

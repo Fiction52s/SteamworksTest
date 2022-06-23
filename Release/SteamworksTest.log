@@ -1,21 +1,9 @@
-﻿  p2p.cpp
-  ggponet.cpp
-ggpo\ggponet.cpp(46): error C2259: 'Peer2PeerBackend': cannot instantiate abstract class
-  ggpo\ggponet.cpp(46): note: due to following members:
-  ggpo\ggponet.cpp(46): note: 'void Sdr::Callbacks::OnMsg(sockaddr_in &,UdpMsg *,int)': is abstract
-  c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\ggpo\network\sdr.h(32): note: see declaration of 'Sdr::Callbacks::OnMsg'
-ggpo\ggponet.cpp(50): error C2259: 'Peer2PeerBackend': cannot instantiate abstract class
-  ggpo\ggponet.cpp(50): note: due to following members:
-  ggpo\ggponet.cpp(50): note: 'void Sdr::Callbacks::OnMsg(sockaddr_in &,UdpMsg *,int)': is abstract
-  c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\ggpo\network\sdr.h(32): note: see declaration of 'Sdr::Callbacks::OnMsg'
-  sdr_proto.cpp
-ggpo\network\sdr_proto.cpp(749): error C2039: 'dest_addr': is not a member of 'SdrProtocol::QueueEntry'
-  c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\ggpo\network\sdr_proto.h(97): note: see declaration of 'SdrProtocol::QueueEntry'
-ggpo\network\sdr_proto.cpp(752): error C2039: 'dest_addr': is not a member of 'SdrProtocol::QueueEntry'
-  c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\ggpo\network\sdr_proto.h(97): note: see declaration of 'SdrProtocol::QueueEntry'
-ggpo\network\sdr_proto.cpp(752): error C2228: left of '.sin_addr' must have class/struct/union
-ggpo\network\sdr_proto.cpp(752): error C2228: left of '.S_un' must have class/struct/union
-ggpo\network\sdr_proto.cpp(752): error C2228: left of '.S_addr' must have class/struct/union
-ggpo\network\sdr_proto.cpp(755): error C2039: 'dest_addr': is not a member of 'SdrProtocol::QueueEntry'
-  c:\users\ficti\documents\visual studio 2015\projects\steamworkstest\steamworkstest\ggpo\network\sdr_proto.h(97): note: see declaration of 'SdrProtocol::QueueEntry'
-ggpo\network\sdr_proto.cpp(755): error C2660: 'Sdr::SendTo': function does not take 3 arguments
+﻿  sdr.cpp
+ggpo\network\sdr.cpp(86): warning C4101: 'dst_ip': unreferenced local variable
+  Generating code
+  1 of 813 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    16 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Release\SteamworksTest.exe
+  SteamworksTest.vcxproj -> C:\Users\ficti\Documents\Visual Studio 2015\Projects\SteamworksTest\Release\SteamworksTest.pdb (Full PDB)
