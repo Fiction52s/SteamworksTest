@@ -40,22 +40,19 @@ public:
 	Sdr();
 
 	//void Init(uint16 port, HSteamNetConnection p_connection, Poll *p, Callbacks *callbacks);
-	void Init(uint16 port, Poll *p, Callbacks *callbacks);
+	void Init(Poll *p, Callbacks *callbacks);
 
 	void SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connection);
 
 	virtual bool OnLoopPoll(void *cookie);
 
+	void SetListenConnection(HSteamNetConnection p_connection);
+
 public:
 	~Sdr(void);
-
-	HSteamNetConnection connection;
-
 protected:
 	// Network transmission information
-	//SOCKET         _socket;
-	//HSteamNetConnection connection;
-	
+	HSteamNetConnection listenConnection;
 	// state management
 	Callbacks      *_callbacks;
 	Poll           *_poll;

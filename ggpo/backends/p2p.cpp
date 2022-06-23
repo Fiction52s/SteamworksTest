@@ -13,7 +13,6 @@ static const int DEFAULT_DISCONNECT_NOTIFY_START   = 750;
 
 Peer2PeerBackend::Peer2PeerBackend(GGPOSessionCallbacks *cb,
                                    const char *gamename,
-                                   uint16 localport,
                                    int num_players,
                                    int input_size) :
     _num_players(num_players),
@@ -46,7 +45,7 @@ Peer2PeerBackend::Peer2PeerBackend(GGPOSessionCallbacks *cb,
 
    for (int i = 0; i < _num_players; ++i)
    {
-	   _sdr[i].Init(localport, &_poll, this);
+	   _sdr[i].Init(&_poll, this);
    }
    
 
@@ -65,6 +64,7 @@ Peer2PeerBackend::Peer2PeerBackend(GGPOSessionCallbacks *cb,
 Peer2PeerBackend::~Peer2PeerBackend()
 {
    delete [] _endpoints;
+   delete[] _sdr;
 }
 
 void
