@@ -4,7 +4,9 @@
 #include <SFML\Graphics.hpp>
 #include "ggponet.h"
 #include "steam\steam_api.h"
-#include "LobbyTester.h"
+#include "LobbyManager.h"
+#include "ConnectionManager.h"
+
 #pragma comment(lib, "wsock32.lib")
 
 #define TIMESTEP (1.0 / 60.0)
@@ -130,14 +132,26 @@ free_buffer(void *buffer);
 
 struct TestGame
 {
+	enum Action
+	{
+		A_GATHER_USERS,
+		A_GET_CONNECTIONS,
+		A_RUN_GAME,
+	};
+
+	Action action;
+
 	static TestGame *currInstance;
 	static TestGame *GetInstance();
 
 	HSteamNetConnection testConnection;
-	LobbyTester lobbyTester;
+	LobbyManager lobbyManager;
+	ConnectionManager connectionManager;
 
 	GGPONonGameState ngs;
 	GGPOSession *ggpo;
+	GGPOPlayer ggpoPlayers[GGPO_MAX_PLAYERS];
+
 	int timeSyncFrames;
 	int currInputs[GGPO_MAX_PLAYERS];
 	int prevInputs[GGPO_MAX_PLAYERS];
@@ -156,7 +170,7 @@ struct TestGame
 	sf::Clock gameClock;
 	sf::RenderWindow *window;
 
-	GGPOPlayer ggpoPlayers[GGPO_MAX_PLAYERS];
+	
 
 	bool isSyncTest;
 
@@ -164,11 +178,12 @@ struct TestGame
 
 	TestGame();
 	~TestGame();
+
+	void SetActionRunGame();
 	void UpdatePlayerInput();
 	bool LoadState(unsigned char *bytes, int len);
 	bool SaveState(unsigned char **buffer,
 		int *len, int *checksum, int frame);
-	bool GetConnection();
 	void GameUpdate();
 	void GGPORunFrame();
 	void RegularRunFrame();

@@ -298,15 +298,15 @@ void TestGame::InitGGPO()
 
 	GGPOErrorCode result;
 
-	unsigned short localPort = 7000;
-	unsigned short otherPort = 7001;
+	//unsigned short localPort = 7000;
+	//unsigned short otherPort = 7001;
 
 	bool shift = Keyboard::isKeyPressed(Keyboard::LShift);//HoldingShift();
-	if (shift)
+	/*if (shift)
 	{
 		localPort = 7001;
 		otherPort = 7000;
-	}
+	}*/
 
 	int frameDelay = 0;
 	string ipStr;// = "127.0.0.1";
@@ -335,7 +335,7 @@ void TestGame::InitGGPO()
 	else
 	{
 		result = ggpo_start_session(&ggpo, &cb, "steamworkstest", num_players,
-			sizeof(int), localPort);
+			sizeof(int) );
 	}
 
 
@@ -615,6 +615,15 @@ void TestGame::FullFrameUpdate()
 	}
 }
 
+void TestGame::SetActionRunGame()
+{
+	action = A_RUN_GAME;
+	gameClock.restart();
+	accumulator = TIMESTEP + .1;
+	currentTime = 0;
+	currGameState.totalGameFrames = 0;
+}
+
 void TestGame::Run()
 {
 	for (int i = 0; i < GGPO_MAX_PLAYERS; ++i)
@@ -622,27 +631,15 @@ void TestGame::Run()
 		players[i] = NULL;
 	}
 
-	accumulator = TIMESTEP + .1;
-	currentTime = 0;
-	currGameState.totalGameFrames = 0;
-
-	gameClock.restart();
 	players[0] = new Player(0);
 	players[1] = new Player(1);
 
-	bool res = GetConnection();
-
-	if (!res)
-	{
-		window->close();
-		return;
-	}
-
-
+	SetActionRunGame();
 
 	if (ggpoMode)
 	{
-		InitGGPO();
+		action = A_GATHER_USERS;
+		lobbyManager.FindLobby();	
 	}
 
 
@@ -660,12 +657,66 @@ void TestGame::Run()
 			}
 		}
 
-		
 		preScreenTexture->clear();
 		
-		FullFrameUpdate();
+		switch (action)
+		{
+		case A_GATHER_USERS:
+		{
+			lobbyManager.Update();
 
-		
+			if (lobbyManager.GetNumCurrentLobbyMembers() == 2)
+			{
+				action = A_GET_CONNECTIONS;
+
+				if (lobbyManager.currentLobby.createdByMe)
+				{
+					cout << "create listen socket" << endl;
+					connectionManager.CreateListenSocket();
+				}
+				else
+				{
+					cout << "other test " << endl;
+					//this is really bad/messy for 4 players. figure out how to do multiple p2p connections soon
+					CSteamID myId = SteamUser()->GetSteamID();
+					for (auto it = lobbyManager.currentLobby.memberList.begin(); it != lobbyManager.currentLobby.memberList.end(); ++it)
+					{
+						if ((*it) == myId)
+						{
+							continue;
+						}
+
+						cout << "try to connect" << endl;
+						connectionManager.ConnectToID((*it));
+					}
+				}
+			}
+
+			SteamAPI_RunCallbacks();
+			break;
+		}
+		case A_GET_CONNECTIONS:
+		{
+			if (connectionManager.connected)
+			{
+				testConnection = connectionManager.connection;
+
+				lobbyManager.LeaveLobby(); //need to see if this causes problems or not. I don't think so.
+
+				InitGGPO(); //call this once I have the connections ready.
+				SetActionRunGame();
+			}
+
+			SteamAPI_RunCallbacks();
+			break;
+		}
+		case A_RUN_GAME:
+		{
+			FullFrameUpdate();
+			break;
+		}
+	
+		}
 
 		preScreenTexture->display();
 		const Texture &preTex = preScreenTexture->getTexture();
@@ -698,50 +749,4 @@ void TestGame::SetupWindow()
 TestGame *TestGame::GetInstance()
 {
 	return currInstance;
-}
-
-bool TestGame::GetConnection()
-{
-	lobbyTester.FindLobby();
-	bool quit = false;
-	while (!quit)
-	{
-		sf::Event ev;
-		while (window->pollEvent(ev))
-		{
-			switch (ev.type)
-			{
-			case sf::Event::Closed:
-				quit = true;
-				break;
-			}
-		}
-
-
-		preScreenTexture->clear();
-
-
-		lobbyTester.Update();
-
-		if (lobbyTester.nt.connected)
-		{
-			testConnection = lobbyTester.nt.connection;
-			return true;
-		}
-
-		SteamAPI_RunCallbacks();
-
-
-		preScreenTexture->display();
-		const Texture &preTex = preScreenTexture->getTexture();
-
-		Sprite preTexSprite(preTex);
-		//preTexSprite.setPosition(-960 / 2, -540 / 2);
-		//preTexSprite.setScale(.5, .5);
-		window->clear(Color::White);
-		window->draw(preTexSprite);
-		window->display();
-	}
-
-	return false;
 }

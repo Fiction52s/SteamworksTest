@@ -4,18 +4,10 @@
 #include "steam/steam_api.h"
 #include <list>
 #include <string>
+#include "LobbyManager.h"
 
 
 #include "NetworkingTest.h"
-
-
-// an item in the list of lobbies we've found to display
-struct Lobby
-{
-	CSteamID m_steamIDLobby;
-	//char m_rgchName[256];
-	std::string name;
-};
 
 struct LobbyTester
 {

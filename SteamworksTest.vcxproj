@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConnectionManager.cpp" />
     <ClCompile Include="ggpo\backends\p2p.cpp" />
     <ClCompile Include="ggpo\backends\spectator.cpp" />
     <ClCompile Include="ggpo\backends\synctest.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="ggpo\poll.cpp" />
     <ClCompile Include="ggpo\sync.cpp" />
     <ClCompile Include="ggpo\timesync.cpp" />
+    <ClCompile Include="LobbyManager.cpp" />
     <ClCompile Include="LobbyTester.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NetworkingTest.cpp" />
@@ -144,6 +146,7 @@
     <ClCompile Include="TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConnectionManager.h" />
     <ClInclude Include="ggpo\backends\backend.h" />
     <ClInclude Include="ggpo\backends\p2p.h" />
     <ClInclude Include="ggpo\backends\spectator.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="ggpo\types.h" />
     <ClInclude Include="ggpo\zconf.h" />
     <ClInclude Include="ggpo\zlib.h" />
+    <ClInclude Include="LobbyManager.h" />
     <ClInclude Include="LobbyTester.h" />
     <ClInclude Include="NetworkingTest.h" />
     <ClInclude Include="Tester.h" />
