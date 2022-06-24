@@ -11,14 +11,14 @@ ConnectionManager::ConnectionManager()
 
 	connectionOwner = false;
 
+	listenSocket = 0;
+
 	connected = false;
-
-
 }
 
 void ConnectionManager::CreateListenSocket()
 {
-	SteamNetworkingSockets()->CreateListenSocketP2P(0, 0, NULL);
+	listenSocket = SteamNetworkingSockets()->CreateListenSocketP2P(0, 0, NULL);
 }
 
 void ConnectionManager::OnMessagesSessionFailedCallback(SteamNetworkingMessagesSessionFailed_t *pCallback)
@@ -104,9 +104,17 @@ void ConnectionManager::OnConnectionStatusChangedCallback(SteamNetConnectionStat
 }
 
 void ConnectionManager::CloseConnection()
-{
-	SteamNetworkingSockets()->CloseConnection(connection, 0, NULL, false);
-	//SteamNetworkingSockets()->closenet
+{	
+	if (connected)
+	{
+		SteamNetworkingSockets()->CloseConnection(connection, 0, NULL, false);
+		connected = false;
+	}
+	else if (listenSocket != 0)
+	{
+		//this destroys ALL connections. needs to be handled differently for more than 2 players
+		SteamNetworkingSockets()->CloseListenSocket(listenSocket);
+	}
 }
 
 void ConnectionManager::Update()

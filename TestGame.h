@@ -144,7 +144,6 @@ struct TestGame
 	static TestGame *currInstance;
 	static TestGame *GetInstance();
 
-	HSteamNetConnection testConnection;
 	LobbyManager lobbyManager;
 	ConnectionManager connectionManager;
 
@@ -188,6 +187,7 @@ struct TestGame
 	void GGPORunFrame();
 	void RegularRunFrame();
 	void InitGGPO();
+	void Cleanup();
 
 	void FullFrameUpdate();
 	void Run();

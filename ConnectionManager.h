@@ -17,6 +17,7 @@ struct ConnectionManager
 
 	//going to just focus on 2 player for now!
 	HSteamNetConnection connection;
+	HSteamListenSocket listenSocket;
 	bool connected;
 	bool connectionOwner;
 

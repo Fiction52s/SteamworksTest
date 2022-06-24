@@ -8,7 +8,9 @@
 #include "types.h"
 #include "sdr.h"
 #include "udp.h"
+#include <iostream>
 
+using namespace std;
 
 Sdr::Sdr() :
 	listenConnection(0),
@@ -34,14 +36,20 @@ void Sdr::SendTo(char *buffer, int len, int flags, HSteamNetConnection p_connect
 {
 	EResult res = SteamNetworkingSockets()->SendMessageToConnection(p_connection, buffer, len, k_EP2PSendReliable, NULL);
 
-	if (res != k_EResultOK)
+	if (res == k_EResultOK)
 	{
-		//currently this happens when the other player leaves the lobby. fix that.
-		Log("unknown error in sendto (erro: %d).\n", res);
-		ASSERT(FALSE && "Unknown error in sendto");
+		Log("sent packet length %d to %d. res: %d\n", len, p_connection, res);
 	}
+	else
+	{
+		cout << "failing to send packet" << endl;
+		//if you are failing to send, the connectionManager should notice!
 
-	Log("sent packet length %d to %d. res: %d\n", len, p_connection, res);
+
+		//currently this happens when the other player leaves the lobby. fix that.
+		//Log("unknown error in sendto (erro: %d).\n", res);
+		//ASSERT(FALSE && "Unknown error in sendto");
+	}
 }
 
 bool Sdr::OnLoopPoll(void *cookie)

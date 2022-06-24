@@ -595,8 +595,8 @@ int main()
 
 	delete game;
 
-	/*int x;
-	cin >> x;*/
+	//int x;
+	//cin >> x;
 
 	//window->close();
 

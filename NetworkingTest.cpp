@@ -86,6 +86,8 @@ void NetworkingTest::OnConnectionStatusChangedCallback(SteamNetConnectionStatusC
 	{
 		cout << "connection closed by peer: " << pCallback->m_info.m_eEndReason << endl;
 
+
+
 		SteamNetworkingSockets()->CloseConnection(connection, 0, NULL, false);
 
 		connected = false;

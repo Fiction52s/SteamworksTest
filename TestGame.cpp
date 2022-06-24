@@ -369,7 +369,7 @@ void TestGame::InitGGPO()
 	ggpoPlayers[otherIndex].u.remote.port = otherPort;*/
 
 
-	ggpoPlayers[otherIndex].u.remote.connection = testConnection;
+	ggpoPlayers[otherIndex].u.remote.connection = connectionManager.connection;
 
 	int i;
 	for (i = 0; i < num_players; i++) {
@@ -699,8 +699,6 @@ void TestGame::Run()
 		{
 			if (connectionManager.connected)
 			{
-				testConnection = connectionManager.connection;
-
 				lobbyManager.LeaveLobby(); //need to see if this causes problems or not. I don't think so.
 
 				InitGGPO(); //call this once I have the connections ready.
@@ -712,6 +710,12 @@ void TestGame::Run()
 		}
 		case A_RUN_GAME:
 		{
+			if ( ggpoMode && !connectionManager.connected)
+			{
+				quit = true;
+				break;
+			}
+
 			FullFrameUpdate();
 			break;
 		}
@@ -729,9 +733,18 @@ void TestGame::Run()
 		window->display();
 	}
 
-	window->close();
+	Cleanup();
+
+	
 
 	//delete window;
+}
+
+void TestGame::Cleanup()
+{
+	connectionManager.CloseConnection();
+
+	window->close();
 }
 
 void TestGame::SetupWindow()
