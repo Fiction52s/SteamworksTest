@@ -96,6 +96,11 @@ void ConnectionManager::OnConnectionStatusChangedCallback(SteamNetConnectionStat
 
 		connected = false;
 	}
+	else if (pCallback->m_eOldState == k_ESteamNetworkingConnectionState_ClosedByPeer
+		&& pCallback->m_info.m_eState == k_ESteamNetworkingConnectionState_None)
+	{
+		//connection returned to default state
+	}
 	else
 	{
 		//cout << "state is confused" << endl;
