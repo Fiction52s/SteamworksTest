@@ -9,7 +9,7 @@
 // an item in the list of lobbies we've found to display
 struct Lobby
 {
-	uint64 m_steamIDLobby;
+	CSteamID m_steamIDLobby;
 	//char m_rgchName[256];
 	std::string name;
 	bool createdByMe;
@@ -51,7 +51,7 @@ struct LobbyManager
 
 	LobbyManager();
 
-	void PopulateLobbyList( uint64 lobbyID );
+	void PopulateLobbyList( CSteamID lobbyID );
 	void Update();
 
 	void TryCreatingLobby(LobbyParams &lp);

@@ -87,7 +87,7 @@ void LobbyManager::OnLobbyChatUpdateCallback(LobbyChatUpdate_t *pCallback)
 {
 	cout << "lobby chat update callback. updated member list" << endl;
 
-	PopulateLobbyList( pCallback->m_ulSteamIDLobby)
+	PopulateLobbyList(pCallback->m_ulSteamIDLobby);
 }
 
 void LobbyManager::OnLobbyChatMessageCallback(LobbyChatMsg_t *pCallback)
@@ -124,7 +124,7 @@ void LobbyManager::OnLobbyDataUpdateCallback(LobbyDataUpdate_t *pCallback)
 	}*/
 }
 
-void LobbyManager::PopulateLobbyList( uint64 lobbyID )
+void LobbyManager::PopulateLobbyList( CSteamID lobbyID )
 {
 	currentLobby.memberList.clear();
 
